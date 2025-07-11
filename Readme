@@ -1,0 +1,6 @@
+npm installed
+breeze installed
+seeder used
+migration
+php artisan verndor:publish --tag=laravel-pagination
+php artisan storage link
