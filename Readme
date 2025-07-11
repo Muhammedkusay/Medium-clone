@@ -1,5 +1,7 @@
 npm installed
 breeze installed
+alpine already installed
+axios already installed
 seeder used
 migration
 php artisan verndor:publish --tag=laravel-pagination

@@ -16,8 +16,18 @@
                         <a href={{ route('profile.show', ['user' => $post->user]) }} class="hover:underline">
                             <h3 class="text-lg md:text-xl">{{ $post->user->name }}</h3>
                         </a>
+                        {{-- follow --}}
+                        @if(auth()->user() && auth()->id() !== $post->user->id)
                         &middot
-                        <a href="#" class="font-bold text-emerald-500 hover:text-emerald-700">Follow</a>
+                        <x-follow-container :user="$post->user">
+                            <button  
+                                class="font-bold"
+                                :class="following ? 'text-red-500 hover:text-red-700' : 'text-emerald-500 hover:text-emerald-700'"
+                                x-text="following ? 'Unfollow' : 'Follow'"
+                                @click="follow()"
+                            ></button>
+                        </x-follow-container>
+                        @endif
                     </div>
                     <div class="flex gap-2 text-gray-500 text-sm">
                         <p>{{ $post->readTime() }}min read</p>
@@ -28,7 +38,7 @@
             </div>
 
             {{-- clap button --}}
-            <x-clap-button/>
+            <x-clap-button :post="$post"/>
         </div>
 
         {{-- post image & content --}}
@@ -44,15 +54,10 @@
             </div>
         </div>
         
-        <div class="flex items-center justify-between pt-6 mt-8 md:mt-16 border-t">
-            {{-- post category --}}
-            <div class=" bg-gray-200 px-4 py-2.5 rounded-full">
-                <p>{{ $post->category->name }}</p>
-            </div>
-            {{-- clap button --}}
-            <x-clap-button/>
+        {{-- post category --}}
+        <div class="w-fit mt-8 md:mt-16 border-t bg-gray-200 px-4 py-2.5 rounded-full">
+            <p>{{ $post->category->name }}</p>
         </div>
-
 
     </div>
 </x-app-layout>

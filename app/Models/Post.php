@@ -34,6 +34,10 @@ class Post extends Model
         return max(1, round($minutes));
     }
 
+    public function claps() {
+        return $this->hasMany(Clap::class);
+    }
+
     public function imageUrl() {
         if($this->image) {
             return Storage::url($this->image);
