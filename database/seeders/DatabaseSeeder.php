@@ -23,20 +23,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $categories =[
-            'Techology',
-            'Health',
-            'Lifestyle',
-            'Travel',
-            'Education',
-            'Food',
-            'Finance',
-        ];
-        
-        foreach ($categories as $category) {
-            Category::create(['name' => $category,]);
-        }
-
-        // Post::factory(100)->create();
     }
 }
