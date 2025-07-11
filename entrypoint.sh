@@ -11,7 +11,7 @@ php artisan config:cache
 php artisan route:cache
 
 # Run migrations and seed database
-php artisan migrate --force
+php artisan migrate:fresh --force
 
 # Create storage symlink if not exists
 if [ ! -L public/storage ]; then

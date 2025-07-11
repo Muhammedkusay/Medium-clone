@@ -7,7 +7,8 @@
                 <h2 class="text-md md:text-lg text-gray-500">{{ '@' . $user->username }}</h2>
 
                 {{-- posts --}}
-                <div class="mt-6 px-2 md:px-0">
+                <div class="mt-6 md:mt-12 px-2 md:px-0">
+                    <p class="mb-4 md:mb-6 text-lg md:text-xl">Posts by <span class="font-bold">{{ $user->name }}</span></p>
                     @forelse ($posts as $post)
                         {{-- post card --}}
                         <x-post-item :post="$post" />
