@@ -2,7 +2,9 @@ npm installed
 breeze installed
 alpine already installed
 axios already installed
+composer require "spatie/laravel-medialibrary"
 seeder used
 migration
+php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="medialibrary-migrations"
 php artisan verndor:publish --tag=laravel-pagination
 php artisan storage link

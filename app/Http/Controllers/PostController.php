@@ -15,7 +15,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
+        
+        $posts = Post::with('user')
+                ->withCount('claps')
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
 
         return view('post.index', [
             'posts' => $posts,
@@ -48,16 +52,18 @@ class PostController extends Controller
             'published_at' => 'nullable|datetime',
         ]);
 
-        $image = $data['image'];
-        unset($data['image']);
+        // $image = $data['image'];
+        // unset($data['image']);
         $data['user_id'] = Auth::id();
         $data['slug'] = Str::slug($data['title']);
 
-        $imagePath = $image->store('posts', 'public');
-        $data['image'] = $imagePath;
+        // $imagePath = $image->store('posts', 'public');
+        // $data['image'] = $imagePath;
 
-        Post::create($data);
+        $post = Post::create($data);
     
+        $post->addMediaFromRequest('image')->toMediaCollection();
+
         return redirect()->route('dashboard');
     }
 
@@ -91,5 +97,28 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }   
+
+    public function category(Category $category)
+    {
+        $posts = $category
+            ->posts()
+            ->with('user')
+            ->withCount('claps')
+            ->latest()
+            ->simplePaginate(5);
+
+        return view('post.index', ['posts' => $posts]);
     }
+
+    // public function userPosts()
+    // {
+    //     $user = auth()->user();
+    //     $posts = $user->posts()->withCount('claps')->paginate(5);
+
+    //     return view('profile.show', [
+    //         'user' => $user,
+    //         'posts' => $posts,
+    //     ]);
+    // }
 }

@@ -8,11 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +31,20 @@ class User extends Authenticatable
         'password',
         'bio',
     ];
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('avatar')
+            ->width(256)
+            ->crop(256, 256);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->singleFile();
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -71,10 +89,12 @@ class User extends Authenticatable
         return $post->claps()->where('user_id', $this->id)->exists();
     }
         
-    public function imageUrl() {
-        if($this->image) {
-            return Storage::url($this->image);
+    public function imageUrl()
+    {
+        if ($this->hasMedia('avatar')) {
+            return $this->getFirstMediaUrl('avatar', 'avatar');
         }
-        return null;
+
+        return Storage::url('avatars/default_avatar.jpg');
     }
 }
