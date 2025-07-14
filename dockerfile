@@ -24,10 +24,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . .
 
 # ✅ Create the SQLite database file inside the container
-RUN mkdir -p /var/www/html/database \
-    && touch /var/www/html/database/database.sqlite \
-    && chown www-data:www-data /var/www/html/database/database.sqlite \
-    && chmod 664 /var/www/html/database/database.sqlite
+RUN && chmod 664 /var/www/html/database/database.sqlite
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
