@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
 
     Route::get('/post/{post:slug}', [PostController::class, 'edit'])->name('post.edit');
-    Route::post('/post/create', [PostController::class, 'store'])->name('post.store');
+    Route::put('/post/update/{post:slug}', [PostController::class, 'update'])->name('post.update');
 
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 

@@ -3,6 +3,7 @@ breeze installed
 alpine already installed
 axios already installed
 composer require "spatie/laravel-medialibrary"
+composer require spatie/laravel-sluggable
 seeder used
 migration
 php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="medialibrary-migrations"

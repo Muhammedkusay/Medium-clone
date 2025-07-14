@@ -7,9 +7,9 @@
             Update Post <span class="text-lg font-normal py-1 px-2 ml-2 bg-gray-200 text-gray-700 rounded-md ">{{ $post->title }}</span>
         </h2>
 
-        <form action="{{ route('post.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('post.update', $post->slug) }}" enctype="multipart/form-data" method="post">
             @csrf
-
+            @method('put')
             {{-- show image --}}
             <div class="h-auto md:h-96 mb-8 md:mb-12 overflow-hidden">
                 <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" />

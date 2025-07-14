@@ -55,7 +55,6 @@ class PostController extends Controller
         // $image = $data['image'];
         // unset($data['image']);
         $data['user_id'] = Auth::id();
-        $data['slug'] = Str::slug($data['title']);
 
         // $imagePath = $image->store('posts', 'public');
         // $data['image'] = $imagePath;
@@ -97,12 +96,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if($post->user_id !== Auth::id()) {
+        if($post->user_id != Auth::id()) {
             abort(403);
         } 
 
         $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
+            'image' => 'image|mimes:jpeg,jpg,png,svg|max:2048',
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required',
@@ -115,7 +114,10 @@ class PostController extends Controller
             $post->addMediaFromRequest('image')->toMediaCollection();
         }
 
-        return redirect()->route('post.show', ['post' => $post]);
+        return redirect()->route('post.show', [
+            'post' => $post,
+            'username' => auth()->user()->username
+        ]);
     }
 
     /**
