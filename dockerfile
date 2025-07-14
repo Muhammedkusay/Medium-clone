@@ -20,10 +20,10 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy existing application directory contents
+# Copy existing application directory contents (including database.sqlite)
 COPY . .
 
-# Fix permissions on database folder to allow writing to SQLite database
+# ✅ FIX: Now fix permissions AFTER copying files
 RUN chown -R www-data:www-data /var/www/html/database \
     && chmod -R 775 /var/www/html/database
 
