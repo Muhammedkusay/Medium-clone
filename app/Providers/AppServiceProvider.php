@@ -22,7 +22,6 @@ class AppServiceProvider extends ServiceProvider
     {
         if (app()->environment('production')) {
             URL::forceScheme('https');
-            @chmod(database_path('database.sqlite'), 0666);
         }
     }
 }
