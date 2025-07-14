@@ -23,6 +23,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy existing application directory contents
 COPY . .
 
+# Fix permissions on database folder to allow writing to SQLite database
+RUN chown -R www-data:www-data /var/www/html/database \
+    && chmod -R 775 /var/www/html/database
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
@@ -37,10 +41,6 @@ RUN php artisan view:cache
 # Run migrations and link storage
 RUN php artisan migrate --force
 RUN php artisan storage:link
-
-# Fix permissions on database folder to allow writing to SQLite database
-RUN chown -R www-data:www-data /var/www/html/database \
-    && chmod -R 775 /var/www/html/database
 
 # Set permissions (adjust user/group if necessary)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
