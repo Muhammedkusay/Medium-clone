@@ -38,6 +38,10 @@ RUN php artisan view:cache
 RUN php artisan migrate --force
 RUN php artisan storage:link
 
+# Fix permissions on database folder to allow writing to SQLite database
+RUN chown -R www-data:www-data /var/www/html/database \
+    && chmod -R 775 /var/www/html/database
+
 # Set permissions (adjust user/group if necessary)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
