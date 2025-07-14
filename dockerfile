@@ -23,9 +23,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy existing application directory contents
 COPY . .
 
-# ✅ Create the SQLite database file inside the container
-RUN && chmod 664 /var/www/html/database/database.sqlite
-
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
