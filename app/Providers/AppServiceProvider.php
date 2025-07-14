@@ -22,6 +22,13 @@ class AppServiceProvider extends ServiceProvider
     {
         if (app()->environment('production')) {
             URL::forceScheme('https');
+
+            $sqlite = database_path('database.sqlite');
+
+            if (file_exists($sqlite) && is_writable(dirname($sqlite))) {
+                @chmod($sqlite, 0666);  // Read/write for all users
+            }
+
         }
     }
 }
