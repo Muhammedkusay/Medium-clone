@@ -80,7 +80,16 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if($post->user_id !== Auth::id()) {
+            abort(403);
+        } 
+
+        $categories = Category::get();
+
+        return view('post.edit', [
+            'post' => $post,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -88,7 +97,25 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        if($post->user_id !== Auth::id()) {
+            abort(403);
+        } 
+
+        $data = $request->validate([
+            'image' => 'required|image|mimes:jpeg,jpg,png,svg|max:2048',
+            'title' => 'required',
+            'content' => 'required',
+            'category_id' => 'required',
+            'published_at' => 'nullable|datetime',
+        ]);
+
+        $post->update($data);
+
+        if($data['image'] ?? false) {
+            $post->addMediaFromRequest('image')->toMediaCollection();
+        }
+
+        return redirect()->route('post.show', ['post' => $post]);
     }
 
     /**
@@ -96,7 +123,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if($post->user_id !== Auth::id()) {
+            abort(403);
+        } 
+        else {
+            $post_title = $post->title;
+            $post->delete();
+            return redirect()->route('dashboard')->with('status', '"'.$post_title.'"' . ' post is successfully deleted');
+        }
     }   
 
     public function category(Category $category)
