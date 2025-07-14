@@ -39,7 +39,7 @@ RUN php artisan route:cache
 RUN php artisan view:cache
 
 # Run migrations and link storage
-RUN php artisan migrate --force
+RUN php artisan migrate:fresh --force
 RUN php artisan storage:link
 
 # Set permissions (adjust user/group if necessary)
