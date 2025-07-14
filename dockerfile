@@ -20,12 +20,14 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy existing application directory contents (including database.sqlite)
+# Copy existing application directory contents
 COPY . .
 
-# ✅ FIX: Now fix permissions AFTER copying files
-RUN chown -R www-data:www-data /var/www/html/database \
-    && chmod -R 775 /var/www/html/database
+# ✅ Create the SQLite database file inside the container
+RUN mkdir -p /var/www/html/database \
+    && touch /var/www/html/database/database.sqlite \
+    && chown www-data:www-data /var/www/html/database/database.sqlite \
+    && chmod 664 /var/www/html/database/database.sqlite
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
@@ -39,7 +41,7 @@ RUN php artisan route:cache
 RUN php artisan view:cache
 
 # Run migrations and link storage
-RUN php artisan migrate:fresh --force
+RUN php artisan migrate --force
 RUN php artisan storage:link
 
 # Set permissions (adjust user/group if necessary)
