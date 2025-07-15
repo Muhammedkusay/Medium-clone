@@ -95,6 +95,6 @@ class User extends Authenticatable implements HasMedia
             return $this->getFirstMediaUrl('avatar', 'avatar');
         }
 
-        return Storage::url('avatars/default_avatar.jpg');
+        return asset('avatars/default_avatar.jpg');
     }
 }
