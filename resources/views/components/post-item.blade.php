@@ -9,7 +9,7 @@
 
     <div class="md:w-3/5 flex flex-col p-5">
         {{-- post title --}}
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{$post->title}}</h5>
+        <h5 class="w-fit mb-2 text-2xl font-bold tracking-tight text-gray-900 overflow-ellipsis">{{$post->title}}</h5>
         {{-- post content --}}
         <p class="mb-3 font-normal text-gray-700">{{Str::words($post->content, 20)}}</p>
 

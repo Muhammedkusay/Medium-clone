@@ -24,6 +24,7 @@
             <div class="md:w-2/6" >
                 <div class="p-3 bg-gray-100 border rounded-lg">
                     <x-follow-container :user="$user">
+                        {{-- name, username, bio --}}
                         <div class="flex items-start gap-4">
                             <x-user-avatar :user="$user" class="w-[80px] h-[80px] md:w-24 md:h-24"/>
                             <div>
@@ -32,22 +33,34 @@
                                 <p class="text-md pt-1 text-gray-600"><span x-text="followersCount" class="pr-1"></span>followers</p>
                             </div>
                         </div>
+
                         @if ($user->bio)
                             <div class="text-md mt-4 py-1 px-2">{{ $user->bio }}</div>
                         @else
                             <div class="text-md mt-4 py-1 px-2">No bio!</div>
                         @endif
+
                         {{-- followers & follow section --}}
-                        @if (auth()->user() && auth()->user()->id !== $user->id)
-                            <button class="w-full">
-                                <a 
-                                    href="#" 
-                                    @click="follow()"
-                                    x-text="following ? 'Unfollow' : 'Follow'" 
-                                    class="block text-white mt-4 px-6 py-1.5 rounded-full shadow-sm"
-                                    :class="following ? 'text-red-700 bg-red-50 hover:bg-red-100' : 'bg-emerald-700 hover:bg-emerald-800'">
-                                </a>
-                            </button>
+                        {{-- the user is authenticated --}}
+                        @if (auth()->user())
+                            {{-- authenticated user !== publisher --}}
+                            @if (auth()->user()->id !== $user->id)
+                                <button class="w-full">
+                                    <a 
+                                        href="#" 
+                                        @click="follow()"
+                                        x-text="following ? 'Unfollow' : 'Follow'" 
+                                        class="block mt-4 px-6 py-1.5 rounded-full shadow-sm"
+                                        :class="following ? 'text-red-700 bg-red-50 hover:bg-red-100' : ' text-white bg-emerald-700 hover:bg-emerald-800'">
+                                    </a>
+                                </button>
+                            @endif
+                        {{-- the user is not authenticated --}}
+                        @else
+                            <a href="{{ route('login') }}" 
+                               class="block text-center text-white mt-4 px-6 py-1.5 rounded-full shadow-sm bg-emerald-700 hover:bg-emerald-800">
+                               Follow
+                            </a>
                         @endif
                     </x-follow-container>
                 </div>

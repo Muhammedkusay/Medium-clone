@@ -17,16 +17,23 @@
                             <h3 class="text-lg md:text-xl">{{ $post->user->name }}</h3>
                         </a>
                         {{-- follow --}}
-                        @if(auth()->user() && auth()->id() !== $post->user->id)
-                        &middot
-                        <x-follow-container :user="$post->user">
-                            <button  
-                                class="font-bold"
-                                :class="following ? 'text-red-500 hover:text-red-700' : 'text-emerald-500 hover:text-emerald-700'"
-                                x-text="following ? 'Unfollow' : 'Follow'"
-                                @click="follow()"
-                            ></button>
-                        </x-follow-container>
+                        @if(auth()->user())
+                            @if(auth()->id() !== $post->user->id)
+                            &middot
+                            <x-follow-container :user="$post->user">
+                                <button  
+                                    class="font-bold"
+                                    :class="following ? 'text-red-500 hover:text-red-700' : 'text-emerald-500 hover:text-emerald-700'"
+                                    x-text="following ? 'Unfollow' : 'Follow'"
+                                    @click="follow()"
+                                ></button>
+                            </x-follow-container>
+                            @endif
+                        @else
+                            <a href={{ route('login') }}
+                               class="font-bold text-emerald-500 hover:text-emerald-700">
+                               Follow
+                            </a>
                         @endif
                     </div>
                     <div class="flex gap-2 text-gray-500 text-sm">
