@@ -12,7 +12,7 @@
 
             </div>
 
-            <div class="flex gap-4 items-center">
+            <div class="flex gap-3 md:gap-4 items-center">
                 {{-- create post --}}
                 <a href="{{ route('post.create') }}" class="flex items-center">
                     <x-primary-button>
@@ -71,12 +71,13 @@
                 @endauth
                 
                 @guest
-                    <a href="{{ route('login') }}" class="block h-fit hover:underline">
+                    <a href="{{ route('login') }}" class="block hover:bg-gray-800 hover:text-white outline outline-1 outline-gray-800 py-1 px-2.5 rounded-md">
                         Login
                     </a>
                 @endguest
 
                 <!-- Hamburger -->
+                @if(auth()->user())
                 <div class="-me-2 flex items-center sm:hidden">
                     <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -85,6 +86,7 @@
                         </svg>
                     </button>
                 </div>
+                @endif
             </div>
         </div>
     </div>
