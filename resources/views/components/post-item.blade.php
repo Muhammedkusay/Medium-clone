@@ -1,13 +1,13 @@
 
-<a href="{{ route('post.show', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="block mb-6 md:flex md:flex-row-reverse md:justify-between bg-white hover:border-gray-300 hover:bg-gray-100 border border-gray-200 rounded-lg shadow-sm">
-    <div class="md:w-2/5 h-32 my-auto md:h-full md:overflow-hidden relative">
+<a href="{{ route('post.show', ['username' => $post->user->username, 'post' => $post->slug]) }}" class="block mb-6 md:flex md:flex-row-reverse md:justify-between md:gap-2 bg-white hover:border-gray-300 hover:bg-gray-100 border border-gray-200 rounded-lg shadow-sm">
+    <div class="md:w-2/5 h-32 md:h-full my-auto md:overflow-hidden relative">
         {{-- post image --}}
-        <img class="w-full h-full rounded-t-lg md:rounded-tl-none md:rounded-r-lg object-cover md:object-scale-down" src="{{ $post->imageUrl() }}" alt="" />
+        <img class="w-full h-full md:h-56 rounded-t-lg md:rounded-tl-none md:rounded-r-lg object-cover" src="{{ $post->imageUrl() }}" alt="" />
         {{-- dark layer --}}
         <div class="absolute w-full h-full top-0 left-0 bg-gray-800 bg-opacity-25 rounded-t-lg md:rounded-tl-none md:rounded-r-lg z-20"></div>
     </div>
 
-    <div class="md:w-1/2 flex flex-col p-5">
+    <div class="md:w-3/5 flex flex-col p-5">
         {{-- post title --}}
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{$post->title}}</h5>
         {{-- post content --}}
