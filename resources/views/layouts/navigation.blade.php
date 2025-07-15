@@ -71,7 +71,7 @@
                 @endauth
                 
                 @guest
-                    <a href="{{ route('login') }}" class="block hover:bg-gray-800 hover:text-white outline outline-1 outline-gray-800 py-1 px-2.5 rounded-md">
+                    <a href="{{ route('login') }}" class="block bg-gray-100 border border-gray-300 text-gray-800 hover:bg-gray-200 py-1 px-4 rounded-md">
                         Login
                     </a>
                 @endguest

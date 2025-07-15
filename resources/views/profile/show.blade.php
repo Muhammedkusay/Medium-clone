@@ -22,33 +22,35 @@
 
             {{-- user info --}}
             <div class="md:w-2/6" >
-                <x-follow-container :user="$user">
-                    <div class="flex items-start gap-4">
-                        <x-user-avatar :user="$user" class="w-[80px] h-[80px] md:w-24 md:h-24"/>
-                        <div>
-                            <h3 class="text-wrap text-md md:text-xl font-bold pt-1">{{ Str::words($user->name, 2) }}</h3>
-                            <h4 class="text-md pt-1 text-gray-600">{{ '@' . $user->username }}</h4>
-                            <p class="text-md pt-1 text-gray-600"><span x-text="followersCount" class="pr-1"></span>followers</p>
+                <div class="p-3 bg-gray-100 border rounded-lg">
+                    <x-follow-container :user="$user">
+                        <div class="flex items-start gap-4">
+                            <x-user-avatar :user="$user" class="w-[80px] h-[80px] md:w-24 md:h-24"/>
+                            <div>
+                                <h3 class="text-wrap text-md md:text-xl font-bold pt-1">{{ Str::words($user->name, 2) }}</h3>
+                                <h4 class="text-md pt-1 text-gray-600">{{ '@' . $user->username }}</h4>
+                                <p class="text-md pt-1 text-gray-600"><span x-text="followersCount" class="pr-1"></span>followers</p>
+                            </div>
                         </div>
-                    </div>
-                    @if ($user->bio)
-                        <div class="text-md text-gray-800 bg-gray-100 mt-4 py-1 px-2 rounded-lg">{{ $user->bio }}</div>
-                    @else
-                        <div class="text-md text-gray-800 bg-gray-100 mt-4 py-1 px-2 rounded-lg">No bio!</div>
-                    @endif
-                    {{-- followers & follow section --}}
-                    @if (auth()->user() && auth()->user()->id !== $user->id)
-                        <button>
-                            <a 
-                                href="#" 
-                                @click="follow()"
-                                x-text="following ? 'Unfollow' : 'Follow'" 
-                                class="block text-white mt-4 px-6 py-1.5 rounded-full shadow-sm"
-                                :class="following ? 'bg-red-600 hover:bg-red-700' : 'bg-emerald-700 hover:bg-emerald-800'">
-                            </a>
-                        </button>
-                    @endif
-                </x-follow-container>
+                        @if ($user->bio)
+                            <div class="text-md mt-4 py-1 px-2">{{ $user->bio }}</div>
+                        @else
+                            <div class="text-md mt-4 py-1 px-2">No bio!</div>
+                        @endif
+                        {{-- followers & follow section --}}
+                        @if (auth()->user() && auth()->user()->id !== $user->id)
+                            <button class="w-full">
+                                <a 
+                                    href="#" 
+                                    @click="follow()"
+                                    x-text="following ? 'Unfollow' : 'Follow'" 
+                                    class="block text-white mt-4 px-6 py-1.5 rounded-full shadow-sm"
+                                    :class="following ? 'text-red-700 bg-red-50 hover:bg-red-100' : 'bg-emerald-700 hover:bg-emerald-800'">
+                                </a>
+                            </button>
+                        @endif
+                    </x-follow-container>
+                </div>
             </div>
 
         </div>
