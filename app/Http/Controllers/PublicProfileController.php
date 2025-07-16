@@ -9,7 +9,7 @@ class PublicProfileController extends Controller
 {
 
     public function show(User $user) {
-        $posts = $user->posts()->withCount('claps')->latest()->paginate(4);
+        $posts = $user->posts()->withCount('claps')->latest()->paginate(3);
 
         return view('profile.show', [
             'user' => $user,

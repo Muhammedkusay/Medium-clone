@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
+use App\Models\Clap;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -87,6 +88,18 @@ class User extends Authenticatable implements HasMedia
     
     public function hasClapped(Post $post) {
         return $post->claps()->where('user_id', $this->id)->exists();
+    }
+    
+    public function getBio() {
+        return $this->bio ?? 'No bio!';
+    }
+    
+    public function getAllClapsCount() {
+    
+        $postIds = $this->posts->pluck('id');
+
+        return Clap::whereIn('post_id', $postIds)->count();
+
     }
         
     public function imageUrl()

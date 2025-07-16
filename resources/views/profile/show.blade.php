@@ -30,15 +30,16 @@
                             <div>
                                 <h3 class="text-wrap text-md md:text-xl font-bold pt-1">{{ Str::words($user->name, 2) }}</h3>
                                 <h4 class="text-md pt-1 text-gray-600">{{ '@' . $user->username }}</h4>
-                                <p class="text-md pt-1 text-gray-600"><span x-text="followersCount" class="pr-1"></span>followers</p>
+                                <p class="text-md pt-1 text-gray-600"><span x-text="followersCount" class="pr-1"></span>Followers</p>
                             </div>
                         </div>
-
-                        @if ($user->bio)
-                            <div class="text-md mt-4 py-1 px-2">{{ $user->bio }}</div>
-                        @else
-                            <div class="text-md mt-4 py-1 px-2">No bio!</div>
-                        @endif
+                        
+                        <div class="text-md my-4 py-1 px-2">{{ $user->getBio() }}</div>
+                        
+                        <div class="flex justify-around">
+                            <div class="w-full text-center text-md pt-1 text-gray-600 border-r border-r-gray-300">{{ $user->posts()->count() }} Posts</div>
+                            <div class="w-full text-center text-md pt-1 text-gray-600">{{ $user->getAllClapsCount() }} Claps</div>
+                        </div>
 
                         {{-- followers & follow section --}}
                         {{-- the user is authenticated --}}
@@ -51,7 +52,7 @@
                                         @click="follow()"
                                         x-text="following ? 'Unfollow' : 'Follow'" 
                                         class="block mt-4 px-6 py-1.5 rounded-full shadow-sm"
-                                        :class="following ? 'text-red-700 bg-red-50 hover:bg-red-100' : ' text-white bg-emerald-700 hover:bg-emerald-800'">
+                                        :class="following ? 'text-red-700 bg-red-50 hover:bg-red-100 border border-red-700' : ' text-white bg-emerald-700 hover:bg-emerald-800'">
                                     </a>
                                 </button>
                             @endif
