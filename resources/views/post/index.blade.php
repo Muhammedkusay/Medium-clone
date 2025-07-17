@@ -14,6 +14,9 @@
                 </div>
                 </div>
             @endif
+            
+            {{-- search bar --}}
+            <x-search-bar />
 
             {{-- category list --}}
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
