@@ -13,11 +13,11 @@ class SearchController extends Controller
         $query = $request->query('q');
 
         $users = User::whereAny(['name', 'username'], 'like', '%'.$query.'%')
-        ->limit(3)
+        ->limit(5)
         ->get();
 
         $posts = Post::where('title', 'like', '%'.$query.'%')
-        ->limit(3)
+        ->limit(5)
         ->get();
 
         $suggestions = $users->merge($posts);
