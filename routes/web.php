@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', [PostController::class, 'index'])->name('dashboard');
 
@@ -13,6 +14,8 @@ Route::get('/@{user:username}', [PublicProfileController::class, 'show'])->name(
 
 Route::get('/category/{category}', [PostController::class, 'category'])->name('post.byCategory');
 Route::get('/@{username}/{post:slug}', [PostController::class, 'show'])->name('post.show');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
