@@ -37,7 +37,7 @@
     </div>
 
     {{-- suggestions --}}
-    <div x-show="openSugg" x-transition class="z-50 w-full cursor-pointer absolute p-1 rounded-lg border border-gray-300 bg-white shadow-lg">
+    <div x-show="openSugg" x-transition class="z-50 w-[96%] md:w-full cursor-pointer absolute p-1 rounded-lg border border-gray-300 bg-white shadow-lg">
         {{-- for loop on suggestions came from controller as json response --}}
         <template x-for="suggestion in suggestions">
             <a class="flex justify-between p-2 rounded-md hover:bg-gray-100"
