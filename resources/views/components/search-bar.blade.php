@@ -1,11 +1,11 @@
 {{-- Search-bar --}}
 <div class="pb-6 px-2 md:px-0 relative"        
     x-data="{
-        suggestions: '',
+        suggestions: [],
         openSugg: false,
         search(event) {
             let value = event.target.value.trim()
-            if(value == '') {
+            if(value.length === 0) {
                 this.openSugg = false
                 return
             }
