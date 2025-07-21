@@ -3,14 +3,14 @@
     x-data="{
         suggestions: [],
         openSugg: false,
-        search(event) {
+        async search(event) {
             let value = event.target.value.trim()
             if(value.length === 0) {
                 this.openSugg = false
                 return
             }
             {{-- send the request --}}
-            axios.get(`/search?q=${value}`)
+            await axios.get(`/search?q=${value}`)
                 .then((res) => {
                     this.suggestions = res.data.suggestions
                     this.openSugg = true
