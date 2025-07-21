@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -12,11 +13,11 @@ class SearchController extends Controller
 
         $query = $request->query('q');
 
-        $users = User::whereAny(['name', 'username'], 'like', '%'.$query.'%')
+        $users = User::whereAny([DB::raw('lower(name)'), DB::raw('lower(username)')], 'like', '%'.strtolower($query).'%')
         ->limit(5)
         ->get();
 
-        $posts = Post::where('title', 'like', '%'.$query.'%')
+        $posts = Post::where(DB::raw('lower(title)'), 'like', '%'.strtolower($query).'%')
         ->limit(5)
         ->get();
 
